@@ -142,7 +142,7 @@
         }
 
         .main {
-            flex: 1;
+            width: 100%;
             min-height: 100vh;
             padding: 32px 28px 40px;
             background: linear-gradient(180deg, #f0f7f1 0%, #ebf2ec 100%);
@@ -260,6 +260,7 @@
 </head>
 
 <body>
+    {{-- Sidebar lateral del panel, conservado como navegacion principal. --}}
     @include('includes.navbar')
     <div class="main">
         <div class="header">
@@ -267,6 +268,7 @@
             <p>Gestión Académica SENA</p>
         </div>
         @yield('contenido')
+        @include('includes.footerFormulario')
     </div>
 </body>
 

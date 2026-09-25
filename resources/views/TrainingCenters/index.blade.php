@@ -261,7 +261,8 @@
             <h1>Listado de Centros</h1>
             <div class="list-actions">
                 <a class="home-button" href="{{ route('dashboard') }}"><i class="fas fa-house"></i> Inicio</a>
-                <a class="create-button" href="{{ route('trainingcenter.registro') }}"><i class="fas fa-plus"></i> Crear centro</a>
+                <a class="create-button" href="{{ route('trainingcenter.registro') }}"><i class="fas fa-plus"></i> Crear
+                    centro</a>
             </div>
         </div>
         <table>

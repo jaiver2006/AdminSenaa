@@ -262,7 +262,8 @@
             <h1>Listado de Cursos</h1>
             <div class="list-actions">
                 <a class="home-button" href="{{ route('dashboard') }}"><i class="fas fa-house"></i> Inicio</a>
-                <a class="create-button" href="{{ route('course.registro') }}"><i class="fas fa-plus"></i> Crear curso</a>
+                <a class="create-button" href="{{ route('course.registro') }}"><i class="fas fa-plus"></i> Crear
+                    curso</a>
             </div>
         </div>
         <table>

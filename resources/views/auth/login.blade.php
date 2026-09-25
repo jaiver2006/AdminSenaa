@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <title>Iniciar sesión</title>
     <style>
         :root {
@@ -32,9 +33,7 @@
         body {
             /* Fondo con profundidad para diferenciar el acceso del panel interno. */
             min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: block;
             padding: 32px 18px;
             background:
                 radial-gradient(circle at 12% 18%, rgba(57, 169, 0, 0.25), transparent 23%),
@@ -69,6 +68,7 @@
         .login-container {
             /* Tarjeta de login elevada y centrada para una entrada mas clara. */
             width: min(92vw, 520px);
+            margin: 0 auto;
             background: var(--card-bg);
             border: 1px solid rgba(255, 255, 255, 0.65);
             border-radius: 26px;
@@ -265,6 +265,8 @@
 
         <div class="meta">Acceso exclusivo para administradores</div>
     </div>
+
+    @include('includes.footerFormulario')
 </body>
 
 </html>

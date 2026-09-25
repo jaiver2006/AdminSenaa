@@ -262,7 +262,8 @@
             <h1>Listado de Instructores</h1>
             <div class="list-actions">
                 <a class="home-button" href="{{ route('dashboard') }}"><i class="fas fa-house"></i> Inicio</a>
-                <a class="create-button" href="{{ route('teacher.registro') }}"><i class="fas fa-plus"></i> Crear instructor</a>
+                <a class="create-button" href="{{ route('teacher.registro') }}"><i class="fas fa-plus"></i> Crear
+                    instructor</a>
             </div>
         </div>
         <table>
