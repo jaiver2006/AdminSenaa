@@ -1,19 +1,240 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap");
 
 :root {
+    /* Paleta institucional compartida por formularios, tablas y paneles. */
     --sena-green: #007a3d;
     --sena-dark: #12352a;
+    --sena-deep: #0b2b21;
     --sena-lime: #39a900;
-    --sena-soft: #e8f3ed;
+    --sena-lime-dark: #278000;
+    --sena-soft: #e7f4eb;
+    --sena-mint: #f4faf6;
+    --sena-gold: #f2c94c;
     --sena-ink: #18342a;
-    --sena-muted: #688074;
-    --sena-background: #f4f7f5;
+    --sena-muted: #617a6d;
+    --sena-line: #d7e8dc;
+    --sena-background: #edf6f0;
+    --sena-shadow: 0 14px 32px rgba(18, 53, 42, 0.09);
 }
 
 body {
     background: var(--sena-background);
     color: var(--sena-ink);
     font-family: "DM Sans", sans-serif;
+}
+
+button,
+.btn,
+input,
+select,
+textarea {
+    font-family: inherit;
+}
+
+.btn-primary,
+.btn-success {
+    background: var(--sena-green) !important;
+    border-color: var(--sena-green) !important;
+}
+
+/* Controles comunes con los colores SENA y estados de interaccion consistentes. */
+
+.btn-primary:hover,
+.btn-success:hover {
+    background: var(--sena-lime-dark) !important;
+    border-color: var(--sena-lime-dark) !important;
+}
+
+.btn-warning {
+    background: var(--sena-gold) !important;
+    border-color: var(--sena-gold) !important;
+    color: var(--sena-deep) !important;
+}
+
+.btn-outline-primary,
+.btn-outline-success {
+    color: var(--sena-green) !important;
+    border-color: var(--sena-green) !important;
+}
+
+.btn-outline-primary:hover,
+.btn-outline-success:hover {
+    background: var(--sena-green) !important;
+    color: #fff !important;
+}
+
+.form-control,
+.form-select {
+    border: 1px solid var(--sena-line);
+    border-radius: 10px;
+    background: #fff;
+    color: var(--sena-ink);
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--sena-lime);
+    box-shadow: 0 0 0 0.2rem rgba(57, 169, 0, 0.16);
+}
+
+.table thead,
+.table-primary {
+    --bs-table-bg: var(--sena-dark);
+    --bs-table-color: #fff;
+    background: var(--sena-dark) !important;
+    color: #fff !important;
+}
+
+.table tbody tr:hover {
+    background: var(--sena-mint);
+}
+
+.card,
+.alert,
+.modal-content {
+    border-color: var(--sena-line);
+    box-shadow: var(--sena-shadow);
+}
+
+.card-header[style],
+.card-header.bg-success,
+.card-header.bg-primary {
+    background: linear-gradient(
+        135deg,
+        var(--sena-dark),
+        var(--sena-green)
+    ) !important;
+    border-color: var(--sena-green) !important;
+}
+
+.card-header {
+    color: #fff;
+}
+
+.main > .container.mt-5 {
+    /* Presentacion unificada para las vistas de detalle y edicion. */
+    max-width: 1120px;
+    margin-top: 0 !important;
+    margin-bottom: 24px;
+}
+
+.main > .container.mt-5 .card {
+    overflow: hidden;
+    border: 1px solid var(--sena-line) !important;
+    border-radius: 22px !important;
+    background: #fff;
+    box-shadow: 0 20px 42px rgba(18, 53, 42, 0.11) !important;
+}
+
+.main > .container.mt-5 .card-header {
+    padding: 22px 28px;
+    background: linear-gradient(
+        110deg,
+        var(--sena-deep),
+        var(--sena-green) 68%,
+        var(--sena-lime)
+    ) !important;
+    border: 0;
+    position: relative;
+}
+
+.main > .container.mt-5 .card-header::after {
+    content: "";
+    position: absolute;
+    right: 28px;
+    top: 50%;
+    width: 46px;
+    height: 4px;
+    border-radius: 10px;
+    background: var(--sena-gold);
+    transform: translateY(-50%);
+}
+
+.main > .container.mt-5 .card-header h3,
+.main > .container.mt-5 .card-header h4 {
+    font-weight: 800;
+    letter-spacing: 0.01em;
+}
+
+.main > .container.mt-5 .card-body {
+    padding: 30px;
+}
+
+.main > .container.mt-5 .card-body label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--sena-dark);
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.main > .container.mt-5 .card-body .form-control:not(input):not(select),
+.main > .container.mt-5 .card-body .form-select {
+    min-height: 46px;
+    display: flex;
+    align-items: center;
+    background: var(--sena-mint);
+    border-color: var(--sena-line);
+    color: var(--sena-ink);
+}
+
+.main > .container.mt-5 .card-body hr {
+    border-color: var(--sena-line);
+    opacity: 1;
+}
+
+.main > .container.mt-5 .card-body .btn {
+    min-height: 44px;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-weight: 800;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.main > .container.mt-5 .card-body .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(18, 53, 42, 0.16);
+}
+
+.main > .container.mt-5 .card-body .btn-secondary {
+    background: #e7f0ea;
+    border-color: #d4e5d9;
+    color: var(--sena-dark);
+}
+
+@media (max-width: 640px) {
+    .main > .container.mt-5 .card-body {
+        padding: 22px 18px;
+    }
+
+    .main > .container.mt-5 .card-header {
+        padding: 20px 18px;
+    }
+
+    .main > .container.mt-5 .card-header::after {
+        display: none;
+    }
+}
+
+.container.mt-4 {
+    background: var(--sena-mint);
+    border: 1px solid var(--sena-line);
+    border-radius: 18px;
+    padding: 24px !important;
+    box-shadow: var(--sena-shadow);
+}
+
+.text-primary,
+.text-success {
+    color: var(--sena-green) !important;
+}
+
+.bg-primary,
+.bg-success {
+    background-color: var(--sena-green) !important;
 }
 
 .sidebar {

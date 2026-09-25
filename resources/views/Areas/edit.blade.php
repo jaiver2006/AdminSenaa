@@ -8,7 +8,9 @@
             </div>
             <div class="card-body">
                 <form action="{{ route('area.update', $areas) }}" method="POST">
+                    {{-- Laravel usa este token para proteger el formulario contra CSRF. --}}
                     @csrf
+                    {{-- El formulario HTML envia POST, pero Laravel lo interpreta como PUT. --}}
                     @method('PUT')
                     <div class="mb-3">
                         <label for="name" class="form-label fw-bold">

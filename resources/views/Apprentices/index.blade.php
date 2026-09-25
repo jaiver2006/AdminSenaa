@@ -147,12 +147,140 @@
                 overflow: hidden
             }
         }
+
+        body {
+            background: #edf6f0;
+        }
+
+        .container {
+            background: #ffffff;
+            border: 1px solid #d7e8dc;
+            box-shadow: 0 18px 36px rgba(18, 53, 42, .10);
+        }
+
+        h1 {
+            color: #007a3d;
+        }
+
+        thead {
+            background: linear-gradient(135deg, #12352a, #007a3d);
+        }
+
+        tbody td {
+            border-bottom-color: #d7e8dc;
+        }
+
+        tbody tr:nth-child(even) {
+            background: #f4faf6;
+        }
+
+        tbody tr:hover {
+            background: #e7f4eb;
+        }
+
+        .mostrar {
+            background: #007a3d;
+        }
+
+        .mostrar:hover {
+            background: #278000;
+        }
+
+        .editar {
+            background: #f2c94c;
+            color: #12352a;
+        }
+
+        .editar:hover {
+            background: #dcae24;
+        }
+
+        .acciones a,
+        .acciones button {
+            min-width: 92px;
+            min-height: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 0;
+            border-radius: 10px;
+            font-size: .88rem;
+            font-weight: 800;
+            box-shadow: 0 5px 12px rgba(18, 53, 42, .12);
+            transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+        }
+
+        .acciones a:hover,
+        .acciones button:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.04);
+            box-shadow: 0 8px 16px rgba(18, 53, 42, .18);
+        }
+
+        .acciones button {
+            background: linear-gradient(135deg, #c62828, #e53935);
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .list-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            margin-bottom: 24px;
+        }
+
+        .list-heading h1 {
+            margin: 0;
+            text-align: left;
+        }
+
+        .create-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 11px 17px;
+            border-radius: 11px;
+            background: linear-gradient(135deg, #007a3d, #39a900);
+            color: #fff;
+            font-size: .9rem;
+            font-weight: 800;
+            text-decoration: none;
+            box-shadow: 0 8px 16px rgba(0, 122, 61, .2);
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+
+        .create-button:hover {
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 22px rgba(0, 122, 61, .28);
+        }
+
+        @media (max-width: 640px) {
+            .list-heading {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .list-heading h1 {
+                font-size: 1.6rem;
+            }
+        }
     </style>
+    @include('includes.listado-styles')
 </head>
 
 <body>
     <div class="container">
-        <h1>Listado de Aprendices</h1>
+        <div class="list-heading">
+            <h1>Listado de Aprendices</h1>
+            <div class="list-actions">
+                <a class="home-button" href="{{ route('dashboard') }}"><i class="fas fa-house"></i> Inicio</a>
+                <a class="create-button" href="{{ route('aprendiz.registro') }}"><i class="fas fa-plus"></i> Crear
+                    aprendiz</a>
+            </div>
+        </div>
         <table>
             <thead>
                 <tr>

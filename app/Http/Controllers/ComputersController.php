@@ -26,6 +26,7 @@ class ComputersController extends Controller
     {
         $computers = Computers::orderBy('id', 'desc')->get();
         return view('Computers.index', compact('computers'));
+        return response()->json($computers);
     }
 
     public function show(int $id)

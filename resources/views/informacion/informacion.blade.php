@@ -264,6 +264,47 @@
                 flex-direction: column;
             }
         }
+
+        body {
+            background: #edf6f0;
+        }
+
+        .main {
+            background: #edf6f0;
+        }
+
+        .header h2 {
+            color: #12352a;
+        }
+
+        .header p {
+            color: #617a6d;
+        }
+
+        .about-intro {
+            background: linear-gradient(135deg, #12352a, #007a3d 68%, #39a900);
+            border-left-color: #39a900;
+            box-shadow: 0 18px 36px rgba(18, 53, 42, .14);
+        }
+
+        .card {
+            border-color: #d7e8dc;
+            box-shadow: 0 14px 30px rgba(18, 53, 42, .08);
+        }
+
+        .card:hover {
+            border-color: #39a900;
+        }
+
+        .card .icon {
+            background: #e7f4eb;
+            color: #007a3d;
+        }
+
+        .about-contact {
+            border-color: #d7e8dc;
+            background: #f4faf6;
+        }
     </style>
     <title>Layout</title>
 </head>

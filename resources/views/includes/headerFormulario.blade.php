@@ -134,9 +134,13 @@
                         </li>
 
                         <li>
-                            <a class="dropdown-item text-danger" href="#">
-                                <i class="fas fa-sign-out-alt me-2"></i>Cerrar sesión
-                            </a>
+                            {{-- Logout real: usa POST y CSRF para cerrar la sesion de forma segura. --}}
+                            <form method="POST" action="{{ route('logout') }}" class="logout-form">
+                                @csrf
+                                <button type="submit" class="dropdown-item text-danger">
+                                    <i class="fas fa-sign-out-alt me-2"></i>Cerrar sesión
+                                </button>
+                            </form>
                         </li>
 
                     </ul>

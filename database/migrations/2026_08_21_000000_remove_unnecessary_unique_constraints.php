@@ -9,11 +9,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('courses', function (Blueprint $table) {
+            $table->dropForeign(['area_id']);
+            $table->dropForeign(['training_centers_id']);
             $table->dropUnique('courses_area_id_unique');
             $table->dropUnique('courses_training_centers_id_unique');
         });
 
         Schema::table('apprentices', function (Blueprint $table) {
+            $table->dropForeign(['course_id']);
+            $table->dropForeign(['computer_id']);
             $table->dropUnique('apprentices_course_id_unique');
             $table->dropUnique('apprentices_computer_id_unique');
         });
