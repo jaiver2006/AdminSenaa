@@ -6,6 +6,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AreaController;
 // Importa el controlador que atiende las peticiones API de centros.
 use App\Http\Controllers\Api\TrainingCenterController;
+// Importa los controladores API de los demas modulos del sistema.
+use App\Http\Controllers\Api\ApprenticeController;
+use App\Http\Controllers\Api\ComputerController;
+use App\Http\Controllers\Api\CourseController;
+use App\Http\Controllers\Api\TeacherController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,3 +34,18 @@ Route::apiResource('areas', AreaController::class);
 Route::apiResource('training-centers', TrainingCenterController::class)
     // Usa el mismo nombre de parametro que reciben los metodos del controlador.
     ->parameters(['training-centers' => 'trainingCenter']);
+
+// Genera las rutas CRUD para los computadores registrados.
+Route::apiResource('computers', ComputerController::class);
+
+// Genera las rutas CRUD para los instructores.
+Route::apiResource('teachers', TeacherController::class)
+    ->parameters(['teachers' => 'teacher']);
+
+// Genera las rutas CRUD para los cursos.
+Route::apiResource('courses', CourseController::class)
+    ->parameters(['courses' => 'course']);
+
+// Genera las rutas CRUD para los aprendices.
+Route::apiResource('apprentices', ApprenticeController::class)
+    ->parameters(['apprentices' => 'apprentice']);
