@@ -2,15 +2,13 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-// Importa el controlador que atiende las peticiones API de areas.
-use App\Http\Controllers\Api\AreaController;
+use App\Http\Controllers\AreasController;
 // Importa el controlador que atiende las peticiones API de centros.
-use App\Http\Controllers\Api\TrainingCenterController;
-// Importa los controladores API de los demas modulos del sistema.
-use App\Http\Controllers\Api\ApprenticeController;
-use App\Http\Controllers\Api\ComputerController;
-use App\Http\Controllers\Api\CourseController;
-use App\Http\Controllers\Api\TeacherController;
+use App\Http\Controllers\TrainingCentersController;
+use App\Http\Controllers\ApprenticesController;
+use App\Http\Controllers\ComputersController;
+use App\Http\Controllers\CoursesController;
+use App\Http\Controllers\TeachersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,25 +25,38 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// Genera automaticamente las rutas GET, POST, PUT/PATCH y DELETE para areas.
-Route::apiResource('areas', AreaController::class);
+Route::get('areas', [AreasController::class, 'index'])->name('api.v1.areas.index');
+Route::post('areas', [AreasController::class, 'store'])->name('api.v1.areas.store');
+Route::get('areas/{area}', [AreasController::class, 'show'])->name('api.v1.areas.show');
+Route::put('areas/{area}', [AreasController::class, 'update'])->name('api.v1.areas.update');
+Route::delete('areas/{area}', [AreasController::class, 'destroy'])->name('api.v1.areas.destroy');
 
-// Genera automaticamente las rutas CRUD para los centros de formacion.
-Route::apiResource('training-centers', TrainingCenterController::class)
-    // Usa el mismo nombre de parametro que reciben los metodos del controlador.
-    ->parameters(['training-centers' => 'trainingCenter']);
+Route::get('training-centers', [TrainingCentersController::class, 'index'])->name('api.v1.training-centers.index');
+Route::post('training-centers', [TrainingCentersController::class, 'store'])->name('api.v1.training-centers.store');
+Route::get('training-centers/{trainingCenter}', [TrainingCentersController::class, 'show'])->name('api.v1.training-centers.show');
+Route::put('training-centers/{trainingCenter}', [TrainingCentersController::class, 'update'])->name('api.v1.training-centers.update');
+Route::delete('training-centers/{trainingCenter}', [TrainingCentersController::class, 'destroy'])->name('api.v1.training-centers.destroy');
 
-// Genera las rutas CRUD para los computadores registrados.
-Route::apiResource('computers', ComputerController::class);
+Route::get('computers', [ComputersController::class, 'index'])->name('api.v1.computers.index');
+Route::post('computers', [ComputersController::class, 'store'])->name('api.v1.computers.store');
+Route::get('computers/{computer}', [ComputersController::class, 'show'])->name('api.v1.computers.show');
+Route::put('computers/{computer}', [ComputersController::class, 'update'])->name('api.v1.computers.update');
+Route::delete('computers/{computer}', [ComputersController::class, 'destroy'])->name('api.v1.computers.destroy');
 
-// Genera las rutas CRUD para los instructores.
-Route::apiResource('teachers', TeacherController::class)
-    ->parameters(['teachers' => 'teacher']);
+Route::get('teachers', [TeachersController::class, 'index'])->name('api.v1.teachers.index');
+Route::post('teachers', [TeachersController::class, 'store'])->name('api.v1.teachers.store');
+Route::get('teachers/{teacher}', [TeachersController::class, 'show'])->name('api.v1.teachers.show');
+Route::put('teachers/{teacher}', [TeachersController::class, 'update'])->name('api.v1.teachers.update');
+Route::delete('teachers/{teacher}', [TeachersController::class, 'destroy'])->name('api.v1.teachers.destroy');
 
-// Genera las rutas CRUD para los cursos.
-Route::apiResource('courses', CourseController::class)
-    ->parameters(['courses' => 'course']);
+Route::get('courses', [CoursesController::class, 'index'])->name('api.v1.courses.index');
+Route::post('courses', [CoursesController::class, 'store'])->name('api.v1.courses.store');
+Route::get('courses/{course}', [CoursesController::class, 'show'])->name('api.v1.courses.show');
+Route::put('courses/{course}', [CoursesController::class, 'update'])->name('api.v1.courses.update');
+Route::delete('courses/{course}', [CoursesController::class, 'destroy'])->name('api.v1.courses.destroy');
 
-// Genera las rutas CRUD para los aprendices.
-Route::apiResource('apprentices', ApprenticeController::class)
-    ->parameters(['apprentices' => 'apprentice']);
+Route::get('apprentices', [ApprenticesController::class, 'index'])->name('api.v1.apprentices.index');
+Route::post('apprentices', [ApprenticesController::class, 'store'])->name('api.v1.apprentices.store');
+Route::get('apprentices/{apprentice}', [ApprenticesController::class, 'show'])->name('api.v1.apprentices.show');
+Route::put('apprentices/{apprentice}', [ApprenticesController::class, 'update'])->name('api.v1.apprentices.update');
+Route::delete('apprentices/{apprentice}', [ApprenticesController::class, 'destroy'])->name('api.v1.apprentices.destroy');

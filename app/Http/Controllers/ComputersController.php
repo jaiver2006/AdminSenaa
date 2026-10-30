@@ -2,57 +2,56 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Computers;
+use Illuminate\Http\Request;
 
+// Controlador que devuelve respuestas JSON para los computadores.
 class ComputersController extends Controller
 {
-    public function create()
-    {
-        return view('Computers.create');
-    }
-
-    public function model(Request $request)
-    {
-        Computers::create([
-            'number' => $request->numero,
-            'brand'  => $request->marca,
-        ]);
-
-        return redirect()->route('computer.index');
-    }
-
+    // Devuelve todos los computadores ordenados del mas reciente al mas antiguo.
     public function index()
     {
-        $computers = Computers::orderBy('id', 'desc')->get();
-        return view('Computers.index', compact('computers'));
-        return response()->json($computers);
+        return response()->json(Computers::orderByDesc('id')->get());
     }
 
-    public function show(int $id)
+    // Crea un computador usando los datos validados de la peticion.
+    public function store(Request $request)
     {
-        $computer = Computers::findOrFail($id);
-        return view('Computers.show', compact('computer'));
+        $data = $request->validate([
+            'number' => ['required', 'integer'],
+            'brand' => ['required', 'string', 'max:255'],
+        ]);
+
+        $computer = Computers::create($data);
+
+        return response()->json($computer, 201);
     }
 
-    public function edit(Computers $computer)
+    // Devuelve un computador especifico mediante el enlace de modelo de Laravel.
+    public function show(Computers $computer)
     {
-        return view('Computers.edit', compact('computer'));
+        return response()->json($computer);
     }
 
+    // Actualiza los datos del computador despues de validarlos.
     public function update(Request $request, Computers $computer)
     {
-        $computer->number = $request->numero;
-        $computer->brand = $request->marca;
-        $computer->save();
+        $data = $request->validate([
+            'number' => ['required', 'integer'],
+            'brand' => ['required', 'string', 'max:255'],
+        ]);
 
-        return redirect()->route('computer.index');
+        $computer->update($data);
+
+        return response()->json($computer);
     }
 
+    // Elimina el computador y confirma la operacion al cliente.
     public function destroy(Computers $computer)
     {
         $computer->delete();
-
-        return redirect()->route('computer.index');
+        return response()->json([
+            'message' => 'Computador eliminado correctamente.',
+        ]);
     }
 }

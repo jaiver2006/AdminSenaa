@@ -2,25 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Apprentices;
-use App\Models\Computers;
-use App\Models\Courses;
+use Illuminate\Http\Request;
 
-
+// Controlador que devuelve respuestas JSON para los aprendices.
 class ApprenticesController extends Controller
 {
-    public function create()
+    // Devuelve los aprendices con el curso y el computador asociados.
+    public function index()
     {
-        $computers = Computers::all();
-        $courses = Courses::all();
+        $apprentices = Apprentices::with('computer', 'course')
+            ->orderByDesc('id')
+            ->get();
 
-        return view('Apprentices.create', compact('computers', 'courses'));
+        return response()->json($apprentices);
     }
 
-    public function dato(Request $request)
+    // Crea un aprendiz comprobando que sus relaciones existan.
+    public function store(Request $request)
     {
-        $validated = $request->validate([
+        $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255'],
             'cell_number' => ['required', 'string', 'max:20'],
@@ -28,50 +29,40 @@ class ApprenticesController extends Controller
             'computer_id' => ['nullable', 'exists:computers,id'],
         ]);
 
-        Apprentices::create($validated);
+        $apprentice = Apprentices::create($data);
 
-        return redirect()->route('aprendiz.index');
+        return response()->json($apprentice->load('computer', 'course'), 201);
     }
 
-    public function index()
+    // Devuelve un aprendiz especifico junto con sus relaciones.
+    public function show(Apprentices $apprentice)
     {
-        $apprentices = Apprentices::with('computer', 'course')->orderBy('id', 'desc')->get();
-
-        return view('Apprentices.index', compact('apprentices'));
+        return response()->json($apprentice->load('computer', 'course'));
     }
 
-    public function show(int $id)
+    // Actualiza solo la informacion validada del aprendiz.
+    public function update(Request $request, Apprentices $apprentice)
     {
-        $aprendiz = Apprentices::findOrFail($id);
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255'],
+            'cell_number' => ['required', 'string', 'max:20'],
+            'course_id' => ['nullable', 'exists:courses,id'],
+            'computer_id' => ['nullable', 'exists:computers,id'],
+        ]);
 
-        return view('Apprentices.show', compact('aprendiz'));
+        $apprentice->update($data);
+
+        return response()->json($apprentice->load('computer', 'course'));
     }
 
-    public function edit(Apprentices $apprentices)
+    // Elimina el aprendiz y devuelve un mensaje de confirmacion.
+    public function destroy(Apprentices $apprentice)
     {
-        $courses = Courses::all();
-        $computers = Computers::all();
+        $apprentice->delete();
 
-        return view('Apprentices.edit', compact('apprentices', 'courses', 'computers'));
-    }
-
-    public function update(Request $request, Apprentices $apprentices)
-    {
-        $apprentices->update($request->only(
-            'name',
-            'email',
-            'cell_number',
-            'course_id',
-            'computer_id'
-        ));
-
-        return redirect()->route('aprendiz.index');
-    }
-
-    public function destroy(Apprentices $apprentices)
-    {
-        $apprentices->delete();
-
-        return redirect()->route('aprendiz.index');
+        return response()->json([
+            'message' => 'Aprendiz eliminado correctamente.',
+        ]);
     }
 }

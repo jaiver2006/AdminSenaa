@@ -2,63 +2,65 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Teachers;
-use App\Models\Areas;
-use App\Models\TrainingCenters;
+use Illuminate\Http\Request;
 
+// Controlador que devuelve respuestas JSON para los instructores.
 class TeachersController extends Controller
 {
-    public function create()
-    {
-        $areas = Areas::all();
-        $trainingCenters = TrainingCenters::all();
-
-        return view('Teachers.create', compact('areas', 'trainingCenters'));
-    }
-
-    public function dato(Request $request)
-    {
-        Teachers::create($request->only('name', 'email', 'area_id', 'training_centers_id'));
-
-        return redirect()->route('teacher.index');
-    }
-
+    // Devuelve los instructores con sus relaciones principales.
     public function index()
     {
         $teachers = Teachers::with('area', 'trainingCenter')
-            ->orderBy('id', 'desc')
+            ->orderByDesc('id')
             ->get();
 
-        return view('Teachers.index', compact('teachers'));
+        return response()->json($teachers);
     }
 
-    public function show(int $id)
+    // Crea un instructor con referencias validas a area y centro de formacion.
+    public function store(Request $request)
     {
-        $teacher = Teachers::findOrFail($id);
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255'],
+            'area_id' => ['nullable', 'exists:areas,id'],
+            'training_centers_id' => ['nullable', 'exists:training_centers,id'],
+        ]);
 
-        return view('Teachers.show', compact('teacher'));
+        $teacher = Teachers::create($data);
+
+        return response()->json($teacher->load('area', 'trainingCenter'), 201);
     }
 
-    public function edit(Teachers $teachers)
+    // Devuelve un instructor especifico junto con sus relaciones.
+    public function show(Teachers $teacher)
     {
-        $areas = Areas::all();
-        $trainingCenters = TrainingCenters::all();
-
-        return view('Teachers.edit', compact('teachers', 'areas', 'trainingCenters'));
+        return response()->json($teacher->load('area', 'trainingCenter'));
     }
 
-    public function update(Request $request, Teachers $teachers)
+    // Actualiza solo los campos permitidos y previamente validados.
+    public function update(Request $request, Teachers $teacher)
     {
-        $teachers->update($request->all());
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255'],
+            'area_id' => ['nullable', 'exists:areas,id'],
+            'training_centers_id' => ['nullable', 'exists:training_centers,id'],
+        ]);
 
-        return redirect()->route('teacher.index');
+        $teacher->update($data);
+
+        return response()->json($teacher->load('area', 'trainingCenter'));
     }
 
-    public function destroy(Teachers $teachers)
+    // Elimina un instructor y devuelve un mensaje de confirmacion.
+    public function destroy(Teachers $teacher)
     {
-        $teachers->delete();
+        $teacher->delete();
 
-        return redirect()->route('teacher.index');
+        return response()->json([
+            'message' => 'Instructor eliminado correctamente.',
+        ]);
     }
 }

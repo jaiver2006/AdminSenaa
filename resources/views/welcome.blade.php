@@ -259,7 +259,7 @@
 
         {{-- Cada tarjeta funciona como acceso directo al listado de su modulo. --}}
         <div class="quick-grid">
-            <a class="quick-card-link" href="{{ route('area.index') }}">
+            <a class="quick-card-link" href="{{ route('api.v1.areas.index') }}">
                 <div class="quick-card">
                     <div class="quick-card__icon"><i class="fas fa-layer-group"></i></div>
                     <h3>Áreas</h3>
@@ -267,7 +267,7 @@
                 </div>
             </a>
 
-            <a class="quick-card-link" href="{{ route('trainingcenter.index') }}">
+            <a class="quick-card-link" href="{{ route('api.v1.training-centers.index') }}">
                 <div class="quick-card">
                     <div class="quick-card__icon"><i class="fas fa-building"></i></div>
                     <h3>Centros</h3>
@@ -275,7 +275,7 @@
                 </div>
             </a>
 
-            <a class="quick-card-link" href="{{ route('aprendiz.index') }}">
+            <a class="quick-card-link" href="{{ route('api.v1.apprentices.index') }}">
                 <div class="quick-card">
                     <div class="quick-card__icon"><i class="fas fa-user-graduate"></i></div>
                     <h3>Aprendices</h3>
@@ -283,7 +283,7 @@
                 </div>
             </a>
 
-            <a class="quick-card-link" href="{{ route('teacher.index') }}">
+            <a class="quick-card-link" href="{{ route('api.v1.teachers.index') }}">
                 <div class="quick-card">
                     <div class="quick-card__icon"><i class="fas fa-chalkboard-user"></i></div>
                     <h3>Instructores</h3>
@@ -291,7 +291,7 @@
                 </div>
             </a>
 
-            <a class="quick-card-link" href="{{ route('course.index') }}">
+            <a class="quick-card-link" href="{{ route('api.v1.courses.index') }}">
                 <div class="quick-card">
                     <div class="quick-card__icon"><i class="fas fa-book"></i></div>
                     <h3>Cursos</h3>
@@ -299,7 +299,7 @@
                 </div>
             </a>
 
-            <a class="quick-card-link" href="{{ route('computer.index') }}">
+            <a class="quick-card-link" href="{{ route('api.v1.computers.index') }}">
                 <div class="quick-card">
                     <div class="quick-card__icon"><i class="fas fa-desktop"></i></div>
                     <h3>Equipos</h3>

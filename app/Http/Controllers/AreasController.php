@@ -2,54 +2,67 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+// Importa el modelo que representa la tabla areas.
 use App\Models\Areas;
+// Permite recibir y validar los datos enviados por Postman.
+use Illuminate\Http\Request;
 
+// Controlador que devuelve respuestas JSON para el recurso areas.
 class AreasController extends Controller
 {
-    public function create()
-    {
-        return view('Areas.create');
-    }
-
-    public function salida(Request $request)
-    {
-        Areas::create($request->only('name'));
-
-        return redirect()->route('area.index');
-    }
-
+    // Devuelve todas las areas ordenadas de la mas reciente a la mas antigua.
     public function index()
     {
-        $areas = Areas::orderBy('id', 'desc')->get();
-
-        return view('Areas.index', compact('areas'));
+        // Consulta la tabla areas y prepara una respuesta JSON.
+        return response()->json(Areas::orderByDesc('id')->get());
     }
 
-    public function show(int $id)
+    // Crea una nueva area con los datos recibidos desde la API.
+    public function store(Request $request)
     {
-        $area = Areas::findOrFail($id);
+        // Valida que el nombre exista, sea texto y no supere 255 caracteres.
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+        ]);
 
-        return view('Areas.show', compact('area'));
+        // Guarda el registro usando los campos permitidos por el modelo.
+        $area = Areas::create($data);
+
+        // Devuelve el registro creado con el estado HTTP 201.
+        return response()->json($area, 201);
     }
 
-    public function edit(Areas $areas)
+    // Devuelve una area especifica usando su identificador de la URL.
+    public function show(Areas $area)
     {
-        return view('Areas.edit', compact('areas'));
+        // Laravel inyecta automaticamente el registro solicitado.
+        return response()->json($area);
     }
 
-    public function update(Request $request, Areas $areas)
+    // Actualiza una area existente con los datos enviados por la API.
+    public function update(Request $request, Areas $area)
     {
-        $areas->name = $request->name;
-        $areas->save();
+        // Valida nuevamente el nombre antes de modificar el registro.
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+        ]);
 
-        return redirect()->route('area.index');
+        // Actualiza solamente los campos validados.
+        $area->update($data);
+
+        // Devuelve el registro despues de aplicar los cambios.
+        return response()->json($area);
     }
 
-    public function destroy(Areas $areas)
+    // Elimina una area especifica usando su identificador.
+    public function destroy(Areas $area)
     {
-        $areas->delete();
+        // Borra el registro encontrado por el enlace de modelo de Laravel.
+        $area->delete();
 
-        return redirect()->route('area.index');
+        // Confirma al cliente que la eliminacion fue realizada.
+        return response()->json([
+            'message' => 'Area eliminada correctamente.',
+        ]);
     }
 }

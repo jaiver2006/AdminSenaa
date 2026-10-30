@@ -2,70 +2,65 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Courses;
-use App\Models\Areas;
-use App\Models\TrainingCenters;
+use Illuminate\Http\Request;
 
+// Controlador que devuelve respuestas JSON para los cursos.
 class CoursesController extends Controller
 {
-    public function create()
-    {
-        $areas = Areas::all();
-        $trainingCenters = TrainingCenters::all();
-
-        return view('Courses.create', compact('areas', 'trainingCenters'));
-    }
-    public function dato(Request $request)
-    {
-        Courses::create($request->only(
-            'numero_de_curso',
-            'day',
-            'area_id',
-            'training_centers_id'
-        ));
-
-        return redirect()->route('course.index');
-    }
-
+    // Devuelve los cursos con el area y el centro de formacion asociados.
     public function index()
     {
-        $courses = Courses::with('area', 'training_center')->orderBy('id', 'desc')->get();
+        $courses = Courses::with('area', 'training_center')
+            ->orderByDesc('id')
+            ->get();
 
-        return view('Courses.index', compact('courses'));
+        return response()->json($courses);
     }
 
-    public function show(int $id)
+    // Crea un curso comprobando sus relaciones antes de guardarlo.
+    public function store(Request $request)
     {
-        $course = Courses::findOrFail($id);
+        $data = $request->validate([
+            'numero_de_curso' => ['required', 'integer'],
+            'day' => ['required', 'string', 'max:255'],
+            'area_id' => ['nullable', 'exists:areas,id'],
+            'training_centers_id' => ['nullable', 'exists:training_centers,id'],
+        ]);
 
-        return view('Courses.show', compact('course'));
+        $course = Courses::create($data);
+
+        return response()->json($course->load('area', 'training_center'), 201);
     }
 
-    public function edit(Courses $courses)
+    // Devuelve un curso especifico junto con sus relaciones principales.
+    public function show(Courses $course)
     {
-        $areas = Areas::all();
-        $trainingCenters = TrainingCenters::all();
-
-        return view('Courses.edit', compact('courses', 'areas', 'trainingCenters'));
+        return response()->json($course->load('area', 'training_center'));
     }
 
-    public function update(Request $request, Courses $courses)
+    // Actualiza los datos del curso despues de validar la peticion.
+    public function update(Request $request, Courses $course)
     {
-        $courses->update($request->only(
-            'numero_de_curso',
-            'day',
-            'area_id',
-            'training_centers_id'
-        ));
+        $data = $request->validate([
+            'numero_de_curso' => ['required', 'integer'],
+            'day' => ['required', 'string', 'max:255'],
+            'area_id' => ['nullable', 'exists:areas,id'],
+            'training_centers_id' => ['nullable', 'exists:training_centers,id'],
+        ]);
 
-        return redirect()->route('course.index');
+        $course->update($data);
+
+        return response()->json($course->load('area', 'training_center'));
     }
 
-    public function destroy(Courses $courses)
+    // Elimina el curso y confirma la operacion al cliente.
+    public function destroy(Courses $course)
     {
-        $courses->delete();
+        $course->delete();
 
-        return redirect()->route('course.index');
+        return response()->json([
+            'message' => 'Curso eliminado correctamente.',
+        ]);
     }
 }

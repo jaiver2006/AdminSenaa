@@ -15,43 +15,43 @@
             <ul class="navbar-nav mx-auto d-none d-lg-flex">
 
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('area.*') ? 'active' : '' }}"
-                        href="{{ route('area.create') }}">
+                    <a class="nav-link {{ request()->routeIs('api.v1.areas.*') ? 'active' : '' }}"
+                        href="{{ route('api.v1.areas.index') }}">
                         <i class="fas fa-layer-group"></i> Áreas
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('computer.*') ? 'active' : '' }}"
-                        href="{{ route('computer.computador') }}">
+                    <a class="nav-link {{ request()->routeIs('api.v1.computers.*') ? 'active' : '' }}"
+                        href="{{ route('api.v1.computers.index') }}">
                         <i class="fas fa-desktop"></i> Computadores
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('trainingcenter.*') ? 'active' : '' }}"
-                        href="{{ route('trainingcenter.registro') }}">
+                    <a class="nav-link {{ request()->routeIs('api.v1.training-centers.*') ? 'active' : '' }}"
+                        href="{{ route('api.v1.training-centers.index') }}">
                         <i class="fas fa-building"></i> Centros
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('course.*') ? 'active' : '' }}"
-                        href="{{ route('course.registro') }}">
+                    <a class="nav-link {{ request()->routeIs('api.v1.courses.*') ? 'active' : '' }}"
+                        href="{{ route('api.v1.courses.index') }}">
                         <i class="fas fa-book"></i> Cursos
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('teacher.*') ? 'active' : '' }}"
-                        href="{{ route('teacher.registro') }}">
+                    <a class="nav-link {{ request()->routeIs('api.v1.teachers.*') ? 'active' : '' }}"
+                        href="{{ route('api.v1.teachers.index') }}">
                         <i class="fas fa-chalkboard-user"></i> Instructores
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('aprendiz.*') ? 'active' : '' }}"
-                        href="{{ route('aprendiz.registro') }}">
+                    <a class="nav-link {{ request()->routeIs('api.v1.apprentices.*') ? 'active' : '' }}"
+                        href="{{ route('api.v1.apprentices.index') }}">
                         <i class="fas fa-user-graduate"></i> Aprendices
                     </a>
                 </li>
@@ -81,17 +81,17 @@
 
                     <ul class="dropdown-menu">
 
-                        <li><a class="dropdown-item" href="{{ route('area.create') }}">Áreas</a></li>
+                        <li><a class="dropdown-item" href="{{ route('api.v1.areas.index') }}">Áreas</a></li>
 
-                        <li><a class="dropdown-item" href="{{ route('computer.computador') }}">Computadores</a></li>
+                        <li><a class="dropdown-item" href="{{ route('api.v1.computers.index') }}">Computadores</a></li>
 
-                        <li><a class="dropdown-item" href="{{ route('trainingcenter.registro') }}">Centros</a></li>
+                        <li><a class="dropdown-item" href="{{ route('api.v1.training-centers.index') }}">Centros</a></li>
 
-                        <li><a class="dropdown-item" href="{{ route('course.registro') }}">Cursos</a></li>
+                        <li><a class="dropdown-item" href="{{ route('api.v1.courses.index') }}">Cursos</a></li>
 
-                        <li><a class="dropdown-item" href="{{ route('teacher.registro') }}">Instructores</a></li>
+                        <li><a class="dropdown-item" href="{{ route('api.v1.teachers.index') }}">Instructores</a></li>
 
-                        <li><a class="dropdown-item" href="{{ route('aprendiz.registro') }}">Aprendices</a></li>
+                        <li><a class="dropdown-item" href="{{ route('api.v1.apprentices.index') }}">Aprendices</a></li>
 
                         <li><a class="dropdown-item" href="{{ route('uniforme.index') }}">Uniforme SENA</a></li>
 
@@ -131,16 +131,6 @@
 
                         <li>
                             <hr class="dropdown-divider">
-                        </li>
-
-                        <li>
-                            {{-- Logout real: usa POST y CSRF para cerrar la sesion de forma segura. --}}
-                            <form method="POST" action="{{ route('logout') }}" class="logout-form">
-                                @csrf
-                                <button type="submit" class="dropdown-item text-danger">
-                                    <i class="fas fa-sign-out-alt me-2"></i>Cerrar sesión
-                                </button>
-                            </form>
                         </li>
 
                     </ul>

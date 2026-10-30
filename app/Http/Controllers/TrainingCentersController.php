@@ -2,55 +2,69 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+// Importa el modelo que representa la tabla training_centers.
 use App\Models\TrainingCenters;
+// Permite recibir y validar los datos enviados por Postman.
+use Illuminate\Http\Request;
 
+// Controlador que devuelve respuestas JSON para los centros de formacion.
 class TrainingCentersController extends Controller
 {
-    public function create()
-    {
-        return view('TrainingCenters.create');
-    }
-
-    public function dato(Request $request)
-    {
-        TrainingCenters::create($request->only('name', 'location'));
-
-        return redirect()->route('trainingcenter.index');
-    }
-
+    // Devuelve todos los centros ordenados del mas reciente al mas antiguo.
     public function index()
     {
-        $trainingcenters = TrainingCenters::orderBy('id', 'desc')->get();
-
-        return view('TrainingCenters.index', compact('trainingcenters'));
+        // Consulta la tabla training_centers y prepara una respuesta JSON.
+        return response()->json(TrainingCenters::orderByDesc('id')->get());
     }
 
-    public function show(int $id)
+    // Crea un nuevo centro con los datos recibidos desde la API.
+    public function store(Request $request)
     {
-        $trainingcenter = TrainingCenters::findOrFail($id);
+        // Valida que el nombre y la ubicacion sean textos obligatorios.
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'location' => ['required', 'string', 'max:255'],
+        ]);
 
-        return view('TrainingCenters.show', compact('trainingcenter'));
+        // Guarda el centro usando los campos permitidos por el modelo.
+        $trainingCenter = TrainingCenters::create($data);
+
+        // Devuelve el registro creado con el estado HTTP 201.
+        return response()->json($trainingCenter, 201);
     }
 
-    public function edit(TrainingCenters $trainingcenter)
+    // Devuelve un centro especifico usando su identificador de la URL.
+    public function show(TrainingCenters $trainingCenter)
     {
-        return view('TrainingCenters.edit', compact('trainingcenter'));
+        // Laravel inyecta automaticamente el registro solicitado.
+        return response()->json($trainingCenter);
     }
 
-    public function update(Request $request, TrainingCenters $trainingcenter)
+    // Actualiza un centro existente con los datos enviados por la API.
+    public function update(Request $request, TrainingCenters $trainingCenter)
     {
-        $trainingcenter->name = $request->name;
-        $trainingcenter->location = $request->location;
-        $trainingcenter->save();
+        // Valida los datos antes de modificar el registro.
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'location' => ['required', 'string', 'max:255'],
+        ]);
 
-        return redirect()->route('trainingcenter.index');
+        // Actualiza solamente los campos validados.
+        $trainingCenter->update($data);
+
+        // Devuelve el registro despues de aplicar los cambios.
+        return response()->json($trainingCenter);
     }
 
-    public function destroy(TrainingCenters $trainingcenter)
+    // Elimina un centro especifico usando su identificador.
+    public function destroy(TrainingCenters $trainingCenter)
     {
-        $trainingcenter->delete();
+        // Borra el registro encontrado por el enlace de modelo de Laravel.
+        $trainingCenter->delete();
 
-        return redirect()->route('trainingcenter.index');
+        // Confirma al cliente que la eliminacion fue realizada.
+        return response()->json([
+            'message' => 'Centro de formacion eliminado correctamente.',
+        ]);
     }
 }

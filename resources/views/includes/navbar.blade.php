@@ -93,46 +93,46 @@
     </div>
 
     <nav class="sidebar-nav" aria-label="Menú principal">
-        {{-- La navegacion conserva las rutas existentes y marca la pagina activa. --}}
+        {{-- La navegacion apunta a los endpoints API y marca el recurso activo. --}}
         <ul class="menu">
             <li>
-                <a class="nav-item {{ request()->routeIs('area.*') ? 'active' : '' }}"
-                    href="{{ route('area.create') }}">
+                <a class="nav-item {{ request()->routeIs('api.v1.areas.*') ? 'active' : '' }}"
+                    href="{{ route('api.v1.areas.index') }}">
                     <span class="nav-icon"><i class="fas fa-layer-group"></i></span>
                     <span>Áreas</span>
                 </a>
             </li>
             <li>
-                <a class="nav-item {{ request()->routeIs('computer.*') ? 'active' : '' }}"
-                    href="{{ route('computer.computador') }}">
+                <a class="nav-item {{ request()->routeIs('api.v1.computers.*') ? 'active' : '' }}"
+                    href="{{ route('api.v1.computers.index') }}">
                     <span class="nav-icon"><i class="fas fa-desktop"></i></span>
                     <span>Computadores</span>
                 </a>
             </li>
             <li>
-                <a class="nav-item {{ request()->routeIs('trainingcenter.*') ? 'active' : '' }}"
-                    href="{{ route('trainingcenter.registro') }}">
+                <a class="nav-item {{ request()->routeIs('api.v1.training-centers.*') ? 'active' : '' }}"
+                    href="{{ route('api.v1.training-centers.index') }}">
                     <span class="nav-icon"><i class="fas fa-building"></i></span>
                     <span>Centros</span>
                 </a>
             </li>
             <li>
-                <a class="nav-item {{ request()->routeIs('course.*') ? 'active' : '' }}"
-                    href="{{ route('course.registro') }}">
+                <a class="nav-item {{ request()->routeIs('api.v1.courses.*') ? 'active' : '' }}"
+                    href="{{ route('api.v1.courses.index') }}">
                     <span class="nav-icon"><i class="fas fa-book"></i></span>
                     <span>Cursos</span>
                 </a>
             </li>
             <li>
-                <a class="nav-item {{ request()->routeIs('teacher.*') ? 'active' : '' }}"
-                    href="{{ route('teacher.registro') }}">
+                <a class="nav-item {{ request()->routeIs('api.v1.teachers.*') ? 'active' : '' }}"
+                    href="{{ route('api.v1.teachers.index') }}">
                     <span class="nav-icon"><i class="fas fa-chalkboard-user"></i></span>
                     <span>Instructores</span>
                 </a>
             </li>
             <li>
-                <a class="nav-item {{ request()->routeIs('aprendiz.*') ? 'active' : '' }}"
-                    href="{{ route('aprendiz.registro') }}">
+                <a class="nav-item {{ request()->routeIs('api.v1.apprentices.*') ? 'active' : '' }}"
+                    href="{{ route('api.v1.apprentices.index') }}">
                     <span class="nav-icon"><i class="fas fa-user-graduate"></i></span>
                     <span>Aprendices</span>
                 </a>
