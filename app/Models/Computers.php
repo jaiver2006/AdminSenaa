@@ -10,7 +10,9 @@ class Computers extends Model
     use HasFactory;
         protected $fillable = [
         'number',
-        'brand'
+        'brand',
+        'imagen_url',
+        'imagen_public_id',
     ];
         public function Apprentice()
     {

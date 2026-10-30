@@ -11,7 +11,9 @@ class TrainingCenters extends Model
     use HasFactory;
         protected $fillable = [
         'name',
-        'location'
+        'location',
+        'imagen_url',
+        'imagen_public_id',
     ];
 
     public function teachers()

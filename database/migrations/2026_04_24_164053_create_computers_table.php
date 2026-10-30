@@ -15,6 +15,11 @@ return new class extends Migration
             $table->id();
             $table->integer('number');
             $table->string('brand');
+
+            //CLOUDDINARY
+            $table->string('imagen_url');
+            $table->string('imagen_public_id');
+
             $table->timestamps();
         });
     }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Cloudinary\Cloudinary;
 // Importa el modelo que representa la tabla training_centers.
 use App\Models\TrainingCenters;
 // Permite recibir y validar los datos enviados por Postman.
@@ -24,12 +25,34 @@ class TrainingCentersController extends Controller
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'location' => ['required', 'string', 'max:255'],
+            'imagen' => 'required|image|mimes:jpg,jpeg,png,webp|max:5120',
+        ]);
+        $file = $request->file('imagen');
+
+        $cloudinary = new Cloudinary([
+            'cloud' => [
+                'cloud_name' => config('services.cloudinary.cloud_name'),
+                'api_key' => config('services.cloudinary.api_key'),
+                'api_secret' => config('services.cloudinary.api_secret'),
+            ],
+            'url' => ['secure' => true],
         ]);
 
-        // Guarda el centro usando los campos permitidos por el modelo.
-        $trainingCenter = TrainingCenters::create($data);
+        $result = $cloudinary->uploadApi()->upload(
+            $file->getRealPath(),
+            [
+                'folder' => 'training-centers',
+                'resource_type' => 'image',
+            ]
+        );
 
-        // Devuelve el registro creado con el estado HTTP 201.
+        $trainingCenter = TrainingCenters::create([
+            'name' => $data['name'],
+            'location' => $data['location'],
+            'imagen_url' => $result['secure_url'],
+            'imagen_public_id' => $result['public_id'],
+        ]);
+
         return response()->json($trainingCenter, 201);
     }
 

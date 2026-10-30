@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Computers;
+use Cloudinary\Cloudinary;
 use Illuminate\Http\Request;
 
 // Controlador que devuelve respuestas JSON para los computadores.
@@ -20,9 +21,34 @@ class ComputersController extends Controller
         $data = $request->validate([
             'number' => ['required', 'integer'],
             'brand' => ['required', 'string', 'max:255'],
+            'imagen' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
         ]);
 
-        $computer = Computers::create($data);
+        $file = $request->file('imagen');
+
+        $cloudinary = new Cloudinary([
+            'cloud' => [
+                'cloud_name' => config('services.cloudinary.cloud_name'),
+                'api_key' => config('services.cloudinary.api_key'),
+                'api_secret' => config('services.cloudinary.api_secret'),
+            ],
+            'url' => ['secure' => true],
+        ]);
+
+        $result = $cloudinary->uploadApi()->upload(
+            $file->getRealPath(),
+            [
+                'folder' => 'computers',
+                'resource_type' => 'image',
+            ]
+        );
+
+        $computer = Computers::create([
+            'number' => $data['number'],
+            'brand' => $data['brand'],
+            'imagen_url' => $result['secure_url'],
+            'imagen_public_id' => $result['public_id'],
+        ]);
 
         return response()->json($computer, 201);
     }
