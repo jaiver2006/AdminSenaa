@@ -6,7 +6,7 @@ use App\Models\Computers;
 use Cloudinary\Cloudinary;
 use Illuminate\Http\Request;
 
-// Controlador que devuelve respuestas JSON para los computadores.
+
 class ComputersController extends Controller
 {
     // Devuelve todos los computadores ordenados del mas reciente al mas antiguo.
